@@ -8,6 +8,8 @@ import {
   useGridApiContext,
   useGridSelector,
   gridPageCountSelector,
+  GridColumnMenu,
+  GridColumnMenuProps,
 } from "@mui/x-data-grid";
 import MuiPagination from "@mui/material/Pagination";
 import { TablePaginationProps } from "@mui/material/TablePagination";
@@ -58,7 +60,7 @@ function Pagination({
   return (
     <MuiPagination
       color="primary"
-      variant="outlined" 
+      variant="outlined"
       shape="rounded"
       className={className}
       count={pageCount}
@@ -76,17 +78,25 @@ function CustomPagination(props: any) {
   return <GridPagination ActionsComponent={Pagination} {...props} />;
 }
 
-export const StripedDataGrid = (props: DataGridProps) => {
+export const StripedDataGrid = ({
+  title,
+  slots,
+  ...rest
+}: DataGridProps & { title?: string }) => {
   return (
-    <StripedGrid
-      {...props}
-      slots={{
-        pagination: CustomPagination,
-      }}
-      getRowClassName={(params) =>
-        params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-      }
-    />
+    <div className="flex-1 h-full">
+      {title && <h1>{title}</h1>}
+      <StripedGrid
+        {...rest}
+        slots={{
+          pagination: CustomPagination,
+          ...slots,
+        }}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+        }
+      />
+    </div>
   );
 };
 

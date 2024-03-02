@@ -31,7 +31,7 @@ const isActivePath = (pathname: string, currentPathname: string) => {
       }
     }
   }
-  console.log(titles);
+  // console.log(titles);
 
   return titles.includes(pathname);
 };

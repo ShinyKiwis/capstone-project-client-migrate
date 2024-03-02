@@ -1,124 +1,124 @@
 "use client";
 
-import { Profile } from '@/app/_components';
-import { Button } from '@mantine/core';
+import { Profile } from "@/app/_components";
+import { Button } from "@mantine/core";
 import {
   DataGrid,
   GridColDef,
+  GridColumnMenu,
+  GridColumnMenuProps,
   GridRenderCellParams,
   GridValueGetterParams,
-  gridClasses
+  gridClasses,
 } from "@mui/x-data-grid";
-import React, { SyntheticEvent, useContext, useState } from 'react'
-import UserFilterButtons from './components/FilterButtons';
-import UsersSearchBar from './components/UsersSearchBar';
-import StripedDataGrid from '@/app/_components/StripedDataGrid';
+import React, { SyntheticEvent, useContext, useState } from "react";
+import UserFilterButtons from "./components/FilterButtons";
+import UsersSearchBar from "./components/UsersSearchBar";
+import StripedDataGrid from "@/app/_components/StripedDataGrid";
 
 const Users = () => {
-  const [selectedFilter, setSelectedFilter] = useState("Dean");
+  const [selectedFilter, setSelectedFilter] = useState("All");
   const [search, setSearch] = useState("");
   const [tableIsLoading, setTableIsLoading] = useState(false);
 
-  const usersData:User_ManageTable[] = [
+  const usersData: User_ManageTable[] = [
     {
-      "id": 2053101,
-      "name": "Nguyễn An",
-      "email": "user2053101@example.com",
-      "roles": [{ "id": 1, "name": "Student" }]
+      id: 2053101,
+      name: "Nguyễn An",
+      email: "user2053101@example.com",
+      roles: [{ id: 1, name: "Student" }],
     },
     {
-      "id": 2053102,
-      "name": "Trần Bình",
-      "email": "user2053102@example.com",
-      "roles": [{ "id": 2, "name": "Teacher" }]
+      id: 2053102,
+      name: "Trần Bình",
+      email: "user2053102@example.com",
+      roles: [{ id: 2, name: "Teacher" }],
     },
     {
-      "id": 2053103,
-      "name": "Lê Châu",
-      "email": "user2053103@example.com",
-      "roles": [{ "id": 3, "name": "Department Head" }]
+      id: 2053103,
+      name: "Lê Châu",
+      email: "user2053103@example.com",
+      roles: [{ id: 3, name: "Department Head" }],
     },
     {
-      "id": 2053104,
-      "name": "Phạm Dũng",
-      "email": "user2053104@example.com",
-      "roles": [{ "id": 4, "name": "Program Chair" }]
+      id: 2053104,
+      name: "Phạm Dũng",
+      email: "user2053104@example.com",
+      roles: [{ id: 4, name: "Program Chair" }],
     },
     {
-      "id": 2053105,
-      "name": "Hoàng Hiếu",
-      "email": "user2053105@example.com",
-      "roles": [{ "id": 5, "name": "Dean" }]
+      id: 2053105,
+      name: "Hoàng Hiếu",
+      email: "user2053105@example.com",
+      roles: [{ id: 5, name: "Dean" }],
     },
     {
-      "id": 2053106,
-      "name": "Huỳnh Khánh",
-      "email": "user2053106@example.com",
-      "roles": [{ "id": 1, "name": "Student" }]
+      id: 2053106,
+      name: "Huỳnh Khánh",
+      email: "user2053106@example.com",
+      roles: [{ id: 1, name: "Student" }],
     },
     {
-      "id": 2053107,
-      "name": "Phan Linh",
-      "email": "user2053107@example.com",
-      "roles": [{ "id": 2, "name": "Teacher" }]
+      id: 2053107,
+      name: "Phan Linh",
+      email: "user2053107@example.com",
+      roles: [{ id: 2, name: "Teacher" }],
     },
     {
-      "id": 2053108,
-      "name": "Vũ Minh",
-      "email": "user2053108@example.com",
-      "roles": [{ "id": 3, "name": "Department Head" }]
+      id: 2053108,
+      name: "Vũ Minh",
+      email: "user2053108@example.com",
+      roles: [{ id: 3, name: "Department Head" }],
     },
     {
-      "id": 2053109,
-      "name": "Võ Nga",
-      "email": "user2053109@example.com",
-      "roles": [{ "id": 4, "name": "Program Chair" }]
+      id: 2053109,
+      name: "Võ Nga",
+      email: "user2053109@example.com",
+      roles: [{ id: 4, name: "Program Chair" }],
     },
     {
-      "id": 2053110,
-      "name": "Đặng Quang",
-      "email": "user2053110@example.com",
-      "roles": [{ "id": 5, "name": "Dean" }]
+      id: 2053110,
+      name: "Đặng Quang",
+      email: "user2053110@example.com",
+      roles: [{ id: 5, name: "Dean" }],
     },
     {
-      "id": 2053111,
-      "name": "Bùi An",
-      "email": "user2053111@example.com",
-      "roles": [{ "id": 1, "name": "Student" }]
+      id: 2053111,
+      name: "Bùi An",
+      email: "user2053111@example.com",
+      roles: [{ id: 1, name: "Student" }],
     },
     {
-      "id": 2053112,
-      "name": "Đỗ Bình",
-      "email": "user2053112@example.com",
-      "roles": [{ "id": 2, "name": "Teacher" }]
+      id: 2053112,
+      name: "Đỗ Bình",
+      email: "user2053112@example.com",
+      roles: [{ id: 2, name: "Teacher" }],
     },
     {
-      "id": 2053113,
-      "name": "Hồ Châu",
-      "email": "user2053113@example.com",
-      "roles": [{ "id": 3, "name": "Department Head" }]
+      id: 2053113,
+      name: "Hồ Châu",
+      email: "user2053113@example.com",
+      roles: [{ id: 3, name: "Department Head" }],
     },
     {
-      "id": 2053114,
-      "name": "Ngô Dũng",
-      "email": "user2053114@example.com",
-      "roles": [{ "id": 4, "name": "Program Chair" }]
+      id: 2053114,
+      name: "Ngô Dũng",
+      email: "user2053114@example.com",
+      roles: [{ id: 4, name: "Program Chair" }],
     },
     {
-      "id": 2053115,
-      "name": "Dương Hiếu",
-      "email": "user2053115@example.com",
-      "roles": [{ "id": 5, "name": "Dean" }]
+      id: 2053115,
+      name: "Dương Hiếu",
+      email: "user2053115@example.com",
+      roles: [{ id: 5, name: "Dean" }],
     },
     {
-      "id": 2053116,
-      "name": "Lý Khánh",
-      "email": "user2053116@example.com",
-      "roles": [{ "id": 1, "name": "Student" }]
+      id: 2053116,
+      name: "Lý Khánh",
+      email: "user2053116@example.com",
+      roles: [{ id: 1, name: "Student" }],
     },
-
-  ]
-  
+  ];
 
   // const {
   //   data: usersData,
@@ -137,7 +137,9 @@ const Users = () => {
   //   staleTime: Infinity,
   // });
 
-  const [rows, setRows] = useState<User_ManageTable[]>(usersData ? usersData : []); // use data from cache if available
+  const [rows, setRows] = useState<User_ManageTable[]>(
+    usersData ? usersData : [],
+  ); // use data from cache if available
 
   // Functional handlers
   const handleFilter = async (selectedRole: Role) => {
@@ -149,7 +151,11 @@ const Users = () => {
     //   });
 
     // setRows(respond ? respond.data.users : []);
-    setTableIsLoading(false);
+    setSelectedFilter(selectedRole.name);
+    setTimeout(() => {
+      setTableIsLoading(false);
+    }, 1500);
+    
   };
 
   const handleSearchUser = async (query: string) => {
@@ -191,7 +197,6 @@ const Users = () => {
     // toggleModal(true);
   };
 
-
   const columns: GridColDef[] = [
     {
       field: "id",
@@ -222,18 +227,18 @@ const Users = () => {
     },
     {
       field: "roles",
-      headerName: "Roles",
+      headerName: "Role",
       minWidth: 150,
       flex: 3,
       valueGetter: (params: GridValueGetterParams) => {
-        return params.row.roles.map(
-          (role: { id: Number; name: String }) => role.name,
-        ).join(", ");
+        return params.row.roles
+          .map((role: { id: Number; name: String }) => role.name)
+          .join(", ");
       },
     },
     {
       field: "actions",
-      headerName: "Actions",
+      headerName: "Action",
       minWidth: 130,
       flex: 3,
       sortable: false,
@@ -241,14 +246,16 @@ const Users = () => {
         return (
           <div className="flex gap-2">
             <Button
-              variant="success"
+              variant="filled"
+              color="#6ED10A"
               className="w-24 py-1 text-sm font-semibold"
               onClick={(e) => handleEditUser(e, params.row)}
             >
               Edit
             </Button>
             <Button
-              variant="danger"
+              variant="filled"
+              color="#CA3D3D"
               className="w-24 py-1 text-sm font-semibold"
               onClick={(e) => handleDeleteUser(e, params.row)}
             >
@@ -260,10 +267,20 @@ const Users = () => {
     },
   ];
 
+  function CustomColumnMenu(props: GridColumnMenuProps) {
+    return (
+      <GridColumnMenu
+        {...props}
+        slots={{
+          columnMenuColumnsItem: null,
+        }}
+      />
+    );
+  }
 
   return (
     <div className="flex h-full w-full flex-col overflow-hidden">
-      <div className="flex flex-initial h-fit py-6">
+      <div className="flex h-fit flex-initial py-6 items-center">
         <UserFilterButtons
           selectedFilter={selectedFilter}
           filterHandler={handleFilter}
@@ -287,6 +304,7 @@ const Users = () => {
               fontWeight: 600,
             },
           }}
+          slots={{ columnMenu: CustomColumnMenu }}
           getRowHeight={() => "auto"}
           initialState={{
             pagination: {
@@ -295,11 +313,12 @@ const Users = () => {
           }}
           pageSizeOptions={[10, 20, 50, 100]}
           checkboxSelection
-          loading = {tableIsLoading}
+          disableColumnFilter
+          loading={tableIsLoading}
         />
       </div>
     </div>
   );
-}
+};
 
-export default Users
+export default Users;

@@ -16,7 +16,7 @@ function UsersSearchBar({value, onChange, searchHandler} : UsersSearchBarProps){
 			<div className="group flex w-full items-center gap-2 rounded-md border-2 border-gray px-4 py-2 focus-within:border-blue">
 				<input
 					type="text"
-					placeholder="Search user by name or id"
+					placeholder="Search user by name or ID"
 					className="w-full outline-none"
 					value={value}
 					onInput={(e) => onChange(e.currentTarget.value)}
