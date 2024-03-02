@@ -24,7 +24,7 @@ const DefaultProfileImage = ({
 
   const size = type === "vertical" ? "h-20 w-20 text-2xl" : "h-12 w-12"
   return (
-    <div className={`flex ${size} items-center justify-center rounded-full bg-blue font-semibold text-white`}>
+    <div className={`flex ${size} items-center justify-center rounded-full bg-sky-600 font-semibold text-white`}>
       <span className="text-md">{shortUsername}</span>
     </div>
   );

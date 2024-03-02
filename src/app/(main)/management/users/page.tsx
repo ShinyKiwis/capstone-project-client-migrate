@@ -7,10 +7,12 @@ import {
   GridColDef,
   GridRenderCellParams,
   GridValueGetterParams,
+  gridClasses
 } from "@mui/x-data-grid";
 import React, { SyntheticEvent, useContext, useState } from 'react'
 import UserFilterButtons from './components/FilterButtons';
 import UsersSearchBar from './components/UsersSearchBar';
+import StripedDataGrid from '@/app/_components/StripedDataGrid';
 
 const Users = () => {
   const [selectedFilter, setSelectedFilter] = useState("Dean");
@@ -189,16 +191,17 @@ const Users = () => {
     // toggleModal(true);
   };
 
+
   const columns: GridColDef[] = [
     {
       field: "id",
-      headerName: "ID number",
+      headerName: "ID",
       minWidth: 90,
       flex: 1,
     },
     {
       field: "user",
-      headerName: "User",
+      headerName: "Name",
       minWidth: 250,
       flex: 4,
       valueGetter: (params: GridValueGetterParams) => {
@@ -225,7 +228,7 @@ const Users = () => {
       valueGetter: (params: GridValueGetterParams) => {
         return params.row.roles.map(
           (role: { id: Number; name: String }) => role.name,
-        );
+        ).join(", ");
       },
     },
     {
@@ -233,6 +236,7 @@ const Users = () => {
       headerName: "Actions",
       minWidth: 130,
       flex: 3,
+      sortable: false,
       renderCell: (params: GridRenderCellParams) => {
         return (
           <div className="flex gap-2">
@@ -256,9 +260,10 @@ const Users = () => {
     },
   ];
 
+
   return (
     <div className="flex h-full w-full flex-col overflow-hidden">
-      <div className="flex h-fit w-full py-6">
+      <div className="flex flex-initial h-fit py-6">
         <UserFilterButtons
           selectedFilter={selectedFilter}
           filterHandler={handleFilter}
@@ -270,8 +275,8 @@ const Users = () => {
         />
       </div>
 
-      <div style={{ flex: "1 1 0%", minHeight: 0, width: "100%" }}>
-        <DataGrid
+      <div style={{ flex: "1 1 0%", minHeight: 0 }}>
+        <StripedDataGrid
           rows={rows || []}
           columns={columns}
           sx={{
@@ -290,7 +295,7 @@ const Users = () => {
           }}
           pageSizeOptions={[10, 20, 50, 100]}
           checkboxSelection
-          loading={tableIsLoading}
+          loading = {tableIsLoading}
         />
       </div>
     </div>
