@@ -12,19 +12,6 @@ interface UserRolesModalProps {
   targetRows: User_ManageTable[];
 }
 
-function RoleEdit_multi(rows: User_ManageTable[]) {
-  const { roles } = useRole();
-
-  return (
-    <>
-      {rows.map((row) => {
-        return (
-          <Profile type="horizontal" username={row.name} email={row.email} />
-        );
-      })}
-    </>
-  );
-}
 
 function UserRolesModal({ opened, setOpen, targetRows }: UserRolesModalProps) {
   const { roles } = useRole();
@@ -116,6 +103,7 @@ function UserRolesModal({ opened, setOpen, targetRows }: UserRolesModalProps) {
     );
   }
 
+	
   return (
     <Modal.Root
       opened={opened}

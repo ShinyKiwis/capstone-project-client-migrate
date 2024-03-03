@@ -1,6 +1,6 @@
 "use client";
 
-import { Profile } from "@/app/_components";
+import { Profile, RemoveModal } from "@/app/_components";
 import { Button } from "@mantine/core";
 import {
   DataGrid,
@@ -12,7 +12,7 @@ import {
   GridValueGetterParams,
   useGridApiRef,
   GridFooterContainer,
-  GridFooter
+  GridFooter,
 } from "@mui/x-data-grid";
 import React, { SyntheticEvent, useContext, useState } from "react";
 import UserFilterButtons from "./components/FilterButtons";
@@ -26,7 +26,8 @@ const Users = () => {
   const [search, setSearch] = useState("");
   const [tableIsLoading, setTableIsLoading] = useState(false);
   const [roleModalOpened, setRoleModalOpened] = useState(false);
-  const [selectedRows, setSelectedRows] = useState<User_ManageTable[]>([]);
+  const [deleteModalOpened, setDeleteModalOpened] = useState(false);
+  const [selectedRows, setSelectedRows] = useState<User_ManageTable[]>([]); // Selected targets for deletion and editing
 
   const usersData: User_ManageTable[] = [
     {
@@ -175,7 +176,9 @@ const Users = () => {
     //   });
 
     // setRows(respond ? respond.data.users : []);
-    setTableIsLoading(false);
+    setTimeout(() => {
+      setTableIsLoading(false);
+    }, 1500);
   };
 
   const handleEditUser = (e: SyntheticEvent, row: any) => {
@@ -183,39 +186,45 @@ const Users = () => {
     // let clickedBtnCoords = clickedBtn.getBoundingClientRect();
 
     setSelectedRows([row]);
-    setRoleModalOpened(true)
+    setRoleModalOpened(true);
   };
 
-  const handleEdit_multi= () => {
+  const handleEdit_multi = () => {
     let selectedRows = gridRef.current.getSelectedRows();
     let selectedRowsArray: any[] = [];
     selectedRows.forEach((value, key) => {
-      selectedRowsArray = [...selectedRowsArray,value]
-    })
+      selectedRowsArray = [...selectedRowsArray, value];
+    });
 
     setSelectedRows(selectedRowsArray);
-    setRoleModalOpened(true)
+    setRoleModalOpened(true);
   };
 
   const handleDeleteUser = (e: SyntheticEvent, row: any) => {
-    alert("Delete:" + row.id);
-    // e.stopPropagation();
-    // console.log("e object:", e);
-    // setModalType("user_deletion");
-    // setModalProps({
-    //   targetUsr: row,
-    // });
-    // toggleModal(true);
-  };
-
-  const handleDelete_multi= () => {
     let selectedRows = gridRef.current.getSelectedRows();
     let selectedRowsArray: any[] = [];
     selectedRows.forEach((value, key) => {
-      selectedRowsArray = [...selectedRowsArray,value]
-    })
-    console.log(selectedRowsArray)
+      selectedRowsArray = [...selectedRowsArray, value];
+    });
+
+    setSelectedRows([row]);
+    setDeleteModalOpened(true);
   };
+
+  const handleDelete_multi = () => {
+    let selectedRows = gridRef.current.getSelectedRows();
+    let selectedRowsArray: any[] = [];
+    selectedRows.forEach((value, key) => {
+      selectedRowsArray = [...selectedRowsArray, value];
+    });
+    setSelectedRows(selectedRowsArray);
+    setDeleteModalOpened(true);
+  };
+
+  function action_DeleteUser(rows: User_ManageTable[]){
+    // Action functions are passed into action button of a modal
+    console.log(JSON.stringify(rows));
+  }
 
   const columns: GridColDef[] = [
     {
@@ -321,10 +330,12 @@ const Users = () => {
             Delete Selected
           </Button>
         </div>
-        <GridFooter sx={{
-          border: 'none', // To delete double border.
-          width: '100%'
-        }} />
+        <GridFooter
+          sx={{
+            border: "none", // To delete double border.
+            width: "100%",
+          }}
+        />
       </GridFooterContainer>
     );
   }
@@ -370,7 +381,23 @@ const Users = () => {
         />
       </div>
 
-      <UserRolesModal opened={roleModalOpened} setOpen={setRoleModalOpened} targetRows={selectedRows} />
+      <UserRolesModal
+        opened={roleModalOpened}
+        setOpen={setRoleModalOpened}
+        targetRows={selectedRows}
+      />
+      <RemoveModal
+        opened={deleteModalOpened}
+        setOpen={setDeleteModalOpened}
+        title="Delete users ?"
+        messages={[
+          "Are you sure you want to remove these user(s) from the system ?",
+        ]}
+        targetStrings={selectedRows.map(row => `[${row.id}] - ${row.name}`)}
+        actionButtonTitle="Remove"
+        actionFunction={action_DeleteUser}
+        actionFuncParams={selectedRows}
+      />
     </div>
   );
 };
