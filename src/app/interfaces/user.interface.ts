@@ -1,5 +1,5 @@
 type Role = {
-	id: number | string,
+	id: number,
 	name: string
 }
 

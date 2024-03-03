@@ -8,31 +8,38 @@ import {
   GridColumnMenu,
   GridColumnMenuProps,
   GridRenderCellParams,
+  GridSlotsComponentsProps,
   GridValueGetterParams,
-  gridClasses,
+  useGridApiRef,
+  GridFooterContainer,
+  GridFooter
 } from "@mui/x-data-grid";
 import React, { SyntheticEvent, useContext, useState } from "react";
 import UserFilterButtons from "./components/FilterButtons";
 import UsersSearchBar from "./components/UsersSearchBar";
 import StripedDataGrid from "@/app/_components/StripedDataGrid";
+import UserRolesModal from "./components/UserRolesModal";
 
 const Users = () => {
+  const gridRef = useGridApiRef();
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [search, setSearch] = useState("");
   const [tableIsLoading, setTableIsLoading] = useState(false);
+  const [roleModalOpened, setRoleModalOpened] = useState(false);
+  const [selectedRows, setSelectedRows] = useState<User_ManageTable[]>([]);
 
   const usersData: User_ManageTable[] = [
     {
       id: 2053101,
       name: "Nguyễn An",
       email: "user2053101@example.com",
-      roles: [{ id: 1, name: "Student" }],
+      roles: [{ id: 1, name: "Teacher" }],
     },
     {
       id: 2053102,
       name: "Trần Bình",
       email: "user2053102@example.com",
-      roles: [{ id: 2, name: "Teacher" }],
+      roles: [{ id: 2, name: "Student" }],
     },
     {
       id: 2053103,
@@ -56,13 +63,13 @@ const Users = () => {
       id: 2053106,
       name: "Huỳnh Khánh",
       email: "user2053106@example.com",
-      roles: [{ id: 1, name: "Student" }],
+      roles: [{ id: 1, name: "Teacher" }],
     },
     {
       id: 2053107,
       name: "Phan Linh",
       email: "user2053107@example.com",
-      roles: [{ id: 2, name: "Teacher" }],
+      roles: [{ id: 2, name: "Student" }],
     },
     {
       id: 2053108,
@@ -86,13 +93,13 @@ const Users = () => {
       id: 2053111,
       name: "Bùi An",
       email: "user2053111@example.com",
-      roles: [{ id: 1, name: "Student" }],
+      roles: [{ id: 1, name: "Teacher" }],
     },
     {
       id: 2053112,
       name: "Đỗ Bình",
       email: "user2053112@example.com",
-      roles: [{ id: 2, name: "Teacher" }],
+      roles: [{ id: 2, name: "Student" }],
     },
     {
       id: 2053113,
@@ -116,7 +123,7 @@ const Users = () => {
       id: 2053116,
       name: "Lý Khánh",
       email: "user2053116@example.com",
-      roles: [{ id: 1, name: "Student" }],
+      roles: [{ id: 1, name: "Teacher" }],
     },
   ];
 
@@ -155,7 +162,6 @@ const Users = () => {
     setTimeout(() => {
       setTableIsLoading(false);
     }, 1500);
-    
   };
 
   const handleSearchUser = async (query: string) => {
@@ -173,17 +179,22 @@ const Users = () => {
   };
 
   const handleEditUser = (e: SyntheticEvent, row: any) => {
-    alert("Edit:" + row.id);
-    // e.stopPropagation();
     // let clickedBtn = e.target as HTMLElement;
     // let clickedBtnCoords = clickedBtn.getBoundingClientRect();
 
-    // setModalType("customPos_user_edit");
-    // setModalProps({
-    //   targetUsr: row,
-    //   position: { x: clickedBtnCoords.x, y: clickedBtnCoords.y },
-    // });
-    // toggleModal(true);
+    setSelectedRows([row]);
+    setRoleModalOpened(true)
+  };
+
+  const handleEdit_multi= () => {
+    let selectedRows = gridRef.current.getSelectedRows();
+    let selectedRowsArray: any[] = [];
+    selectedRows.forEach((value, key) => {
+      selectedRowsArray = [...selectedRowsArray,value]
+    })
+
+    setSelectedRows(selectedRowsArray);
+    setRoleModalOpened(true)
   };
 
   const handleDeleteUser = (e: SyntheticEvent, row: any) => {
@@ -195,6 +206,15 @@ const Users = () => {
     //   targetUsr: row,
     // });
     // toggleModal(true);
+  };
+
+  const handleDelete_multi= () => {
+    let selectedRows = gridRef.current.getSelectedRows();
+    let selectedRowsArray: any[] = [];
+    selectedRows.forEach((value, key) => {
+      selectedRowsArray = [...selectedRowsArray,value]
+    })
+    console.log(selectedRowsArray)
   };
 
   const columns: GridColDef[] = [
@@ -278,9 +298,40 @@ const Users = () => {
     );
   }
 
+  function CustomFooterActions(
+    props: NonNullable<GridSlotsComponentsProps["footer"]>,
+  ) {
+    return (
+      <GridFooterContainer>
+        <div className="flex gap-4 px-4">
+          <Button
+            variant="filled"
+            color="#6ED10A"
+            className="w-24 py-1 text-sm font-semibold"
+            onClick={handleEdit_multi}
+          >
+            Edit Selected
+          </Button>
+          <Button
+            variant="filled"
+            color="#CA3D3D"
+            className="w-24 py-1 text-sm font-semibold"
+            onClick={handleDelete_multi}
+          >
+            Delete Selected
+          </Button>
+        </div>
+        <GridFooter sx={{
+          border: 'none', // To delete double border.
+          width: '100%'
+        }} />
+      </GridFooterContainer>
+    );
+  }
+
   return (
     <div className="flex h-full w-full flex-col overflow-hidden">
-      <div className="flex h-fit flex-initial py-6 items-center">
+      <div className="flex h-fit flex-initial py-6">
         <UserFilterButtons
           selectedFilter={selectedFilter}
           filterHandler={handleFilter}
@@ -304,7 +355,7 @@ const Users = () => {
               fontWeight: 600,
             },
           }}
-          slots={{ columnMenu: CustomColumnMenu }}
+          slots={{ columnMenu: CustomColumnMenu, footer: CustomFooterActions }}
           getRowHeight={() => "auto"}
           initialState={{
             pagination: {
@@ -315,8 +366,11 @@ const Users = () => {
           checkboxSelection
           disableColumnFilter
           loading={tableIsLoading}
+          apiRef={gridRef}
         />
       </div>
+
+      <UserRolesModal opened={roleModalOpened} setOpen={setRoleModalOpened} targetRows={selectedRows} />
     </div>
   );
 };
