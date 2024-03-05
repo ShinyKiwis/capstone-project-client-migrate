@@ -31,7 +31,7 @@ const isActivePath = (pathname: string, currentPathname: string) => {
       }
     }
   }
-  console.log(titles);
+  // console.log(titles);
 
   return titles.includes(pathname);
 };
@@ -54,7 +54,7 @@ const SideBarItem = ({ Icon, title, pages }: SideBarItemProps) => {
           />
         </Accordion.Control>
         <Accordion.Panel>
-          {pages.map((page) => {
+          {pages.map((page, index) => {
             return (
               <NavLink
                 label={page.title}
@@ -62,6 +62,7 @@ const SideBarItem = ({ Icon, title, pages }: SideBarItemProps) => {
                 active={isActivePath(page.title, pathname)}
                 variant={isActiveSubtitle(page.title) ? "subtle" : ""}
                 className={`rounded-md font-bold ${!isActiveSubtitle(page.title) ? "text-gray-400" : ""}`}
+                key={index}
               />
             );
           })}
@@ -92,9 +93,9 @@ const SideBar = () => {
           objectFit="cover"
         />
       </div>
-      {sidebarItems.map((item) => {
+      {sidebarItems.map((item, index) => {
         return (
-          <SideBarItem Icon={item.Icon} title={item.title} pages={item.pages} />
+          <SideBarItem Icon={item.Icon} title={item.title} pages={item.pages} key={index}/>
         );
       })}
     </div>
