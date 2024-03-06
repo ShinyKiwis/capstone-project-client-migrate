@@ -24,13 +24,14 @@ const Login = () => {
             className="rounded-bl-xl rounded-tl-xl"
           />
         </div>
-        <div className="flex w-2/5 flex-col items-center px-16 py-24">
-          <div className="relative h-64 w-64">
+        <div className="flex w-2/5 flex-col items-center justify-center px-16 py-24">
+          <div className="relative">
             <Image
               src="/logo.svg"
               alt="software logo"
-              layout="fill"
-              objectFit="cover"
+              width={256}
+              height={64}
+              className="mb-12"
             />
           </div>
           <form

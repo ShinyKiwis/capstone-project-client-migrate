@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import "@mantine/core/styles.css";
+import "mantine-datatable/styles.css";
+import "./globals.css";
 
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
-import App from "./_components/App";
+import PageTitleProvider from "./providers/PageTitleProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <ColorSchemeScript />
+        <ColorSchemeScript defaultColorScheme="light"/>
       </head>
       <body className={inter.className}>
-        <MantineProvider>
-          {children}
+        <MantineProvider defaultColorScheme="light">
+          <PageTitleProvider>{children}</PageTitleProvider>
         </MantineProvider>
       </body>
     </html>

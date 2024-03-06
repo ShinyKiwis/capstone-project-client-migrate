@@ -1,23 +1,28 @@
-import React from "react";
+"use client";
+
+import React, { useContext } from "react";
 import { Profile } from "..";
 import { FaBell } from "react-icons/fa";
 import { MdArrowDropDown } from "react-icons/md";
+import { usePageTitleContext } from "@/app/providers/PageTitleProvider";
+import { Text } from "@mantine/core";
 
 const PageHeader = () => {
+  const { pageTitle } = usePageTitleContext();
   return (
-    <div className="relative flex h-20 items-center gap-4 pl-8 pr-14 pt-5">
-      <div>
-        <h1>Page title</h1>
-      </div>
+    <div className="relative flex h-20 items-center gap-4 px-8 pt-5">
+      <Text size="xl" fw={700} c="blue">
+        {pageTitle}
+      </Text>
       <div className="ms-auto flex gap-4">
         <button className="w-fit">
-          <FaBell size={25} />
+          <FaBell size={20} />
         </button>
         <div
           className="flex items-center gap-2"
           // onClick={() => setToggleProfileModal(!toggleProfileModal)}
         >
-          <Profile username={"User's Name"} type="horizontal" />
+          <Profile username="John Doe" type="horizontal" />
           <MdArrowDropDown size={35} className="cursor-pointer" />
         </div>
       </div>
@@ -38,7 +43,6 @@ const PageHeader = () => {
           <Button>Logout</Button>
         </div>
       </div> */}
-
     </div>
   );
 };

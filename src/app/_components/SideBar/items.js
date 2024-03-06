@@ -5,6 +5,9 @@ import {
 } from "react-icons/fa";
 import { VscGraph } from "react-icons/vsc";
 import { MdManageAccounts } from "react-icons/md";
+import { RiExpandRightLine, RiExpandLeftLine } from "react-icons/ri";
+import { AiOutlineProject } from "react-icons/ai";
+import { PiExam } from "react-icons/pi";
 
 const sidebarItems = [
   {
@@ -33,7 +36,7 @@ const sidebarItems = [
     ],
   },
   {
-    Icon: FaProjectDiagram,
+    Icon: AiOutlineProject,
     title: "Projects",
     pages: [
       {
@@ -47,7 +50,7 @@ const sidebarItems = [
     ],
   },
   {
-    Icon: FaUserGraduate,
+    Icon: PiExam,
     title: "Assessment",
     pages: [
       {

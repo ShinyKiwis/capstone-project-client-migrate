@@ -14,7 +14,7 @@ import {
 import MuiPagination from "@mui/material/Pagination";
 import { TablePaginationProps } from "@mui/material/TablePagination";
 
-const ODD_OPACITY = 0.2;
+const ODD_OPACITY = 0.1;
 
 const StripedGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {

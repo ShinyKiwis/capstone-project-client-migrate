@@ -117,7 +117,7 @@ function UserRolesModal({ opened, setOpen, targetRows }: UserRolesModalProps) {
           <Modal.Title>
             <div className="flex items-center gap-4">
               <CiCircleInfo size={60} color="blue" />
-              <span className="text-xl font-semibold">Edit user's role</span>
+              <span className="text-xl font-semibold">Edit user`&lsquo;`s role</span>
             </div>
           </Modal.Title>
           <Modal.CloseButton />

@@ -1,7 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer mantine, mantine-datatable;
 
 body {
   background-color: white;
+}
+
+/* Fix mantine datatable page size selector active background */
+.mantine-datatable-page-size-selector-active  {
+  background-color: #1C7ED6;
 }
