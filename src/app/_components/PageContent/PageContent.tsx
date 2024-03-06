@@ -5,7 +5,7 @@ const PageContent = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-1 flex-col">
       <PageHeader />
-      <div className="flex-1 bg-slate-100">{children}</div>
+      <div className="flex-1 bg-white px-8 pb-8 overflow-hidden">{children}</div>
     </div>
   );
 };

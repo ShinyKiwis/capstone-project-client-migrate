@@ -31,7 +31,7 @@ const isActivePath = (pathname: string, currentPathname: string) => {
       }
     }
   }
-  console.log(titles);
+  // console.log(titles);
 
   return titles.includes(pathname);
 };
@@ -62,6 +62,7 @@ const SideBarItem = ({ Icon, title, pages }: SideBarItemProps) => {
                 active={isActivePath(page.title, pathname)}
                 variant={isActiveSubtitle(page.title) ? "subtle" : ""}
                 className={`rounded-md font-bold ${!isActiveSubtitle(page.title) ? "text-gray-400" : ""}`}
+                key={page.title}
               />
             );
           })}
@@ -94,7 +95,7 @@ const SideBar = () => {
       </div>
       {sidebarItems.map((item) => {
         return (
-          <SideBarItem Icon={item.Icon} title={item.title} pages={item.pages} />
+          <SideBarItem Icon={item.Icon} title={item.title} pages={item.pages} key={item.title}/>
         );
       })}
     </div>
