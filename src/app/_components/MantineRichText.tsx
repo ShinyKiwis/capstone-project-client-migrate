@@ -7,6 +7,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import BulletList from '@tiptap/extension-bullet-list';
+import OrderedList from '@tiptap/extension-ordered-list';
 
 interface MantineRichTextProps {
   content: Content
@@ -16,18 +17,24 @@ interface MantineRichTextProps {
 function MantineRichText({content, onChange}:MantineRichTextProps) {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        bulletList:{
+          HTMLAttributes: {
+            class: 'list-disc'
+          }
+        },
+        orderedList:{
+          HTMLAttributes: {
+            class: 'list-decimal'
+          }
+        }
+      }),
       Underline,
       Link,
       Superscript,
       SubScript,
       Highlight,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      BulletList.configure({
-        HTMLAttributes: {
-          class: 'list-disc'
-        }
-      })
     ],
     content,
     onUpdate(props) {

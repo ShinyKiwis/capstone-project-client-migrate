@@ -21,6 +21,7 @@
     "@tiptap/extension-highlight": "^2.2.4",
     "@tiptap/extension-link": "^2.2.4",
     "@tiptap/extension-list-item": "^2.2.4",
+    "@tiptap/extension-ordered-list": "^2.2.4",
     "@tiptap/extension-subscript": "^2.2.4",
     "@tiptap/extension-superscript": "^2.2.4",
     "@tiptap/extension-text-align": "^2.2.4",
