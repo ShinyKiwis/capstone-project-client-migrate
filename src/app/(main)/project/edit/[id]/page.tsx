@@ -81,22 +81,36 @@ const EditProject = ({ params }: { params: { id: string } }) => {
   }
 
   // Get project with id param
-  console.log('Displaying project:', params.id)
-  const retreivedProject = {}
+  console.log("Displaying project:", params.id);
+  const retreivedProject = {
+    title: "Test Project",
+    stage: "1",
+    programs: ["1", "2"],
+    branches: ["2"],
+    instructorsList: ["1234567", "22314567"],
+    membersNo: 3,
+    membersList: ["20112337", "1"],
+    description: "<p>Main <strong>desciotuoib</strong></p>",
+    tasks:
+      '<ul class="list-disc"><li><p>Git gud</p></li><li><p>Git done</p></li></ul>',
+    references:
+      '<ol class="list-decimal"><li><p>internet</p></li><li><p>bookds</p></li></ol>',
+    requirements: "<p>noopthing much</p>",
+  };
 
   const form = useForm({
     initialValues: {
-      title: "",
-      stage: "1",
-      programs: [],
-      branches: [],
-      instructorsList: [],
-      membersNo: 1,
-      membersList: [],
-      description: "",
-      tasks: "",
-      references: "",
-      requirements: "",
+      title: retreivedProject.title,
+      stage: retreivedProject.stage,
+      programs: retreivedProject.programs,
+      branches: retreivedProject.branches,
+      instructorsList: retreivedProject.instructorsList,
+      membersNo: retreivedProject.membersNo,
+      membersList: retreivedProject.membersList,
+      description: retreivedProject.description,
+      tasks: retreivedProject.tasks,
+      references: retreivedProject.references,
+      requirements: retreivedProject.requirements,
     },
 
     // validate: {
@@ -253,7 +267,12 @@ const EditProject = ({ params }: { params: { id: string } }) => {
           <div className="mt-4 flex h-fit gap-4">
             <div className="h-fit min-h-[16rem] w-1/3">
               <InputFieldTitle title="Members" />
-              <ProfileSelectorAsync onChange={form.getInputProps("membersList").onChange} value={form.getInputProps("membersList").value} placeholder="Select member(s)" searchApi="localhost:3500"/>
+              <ProfileSelectorAsync
+                onChange={form.getInputProps("membersList").onChange}
+                value={form.getInputProps("membersList").value}
+                placeholder="Select member(s)"
+                searchApi="localhost:3500"
+              />
             </div>
 
             <div className="w-2/3">
@@ -282,8 +301,23 @@ const EditProject = ({ params }: { params: { id: string } }) => {
         </div>
 
         <div className="flex justify-end gap-4 pb-4 pt-4">
-          <Button type="submit" color="lime" onClick={() => {console.log("set to submit")}} >Submit for approval</Button>
-          <Button type="submit" onClick={() => {console.log("set to save")}} >Save Changes</Button>
+          <Button
+            type="submit"
+            color="lime"
+            onClick={() => {
+              console.log("set to submit");
+            }}
+          >
+            Submit for approval
+          </Button>
+          <Button
+            type="submit"
+            onClick={() => {
+              console.log("set to save");
+            }}
+          >
+            Save Changes
+          </Button>
         </div>
       </form>
     </div>
