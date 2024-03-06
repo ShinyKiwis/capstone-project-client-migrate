@@ -22,7 +22,7 @@ const SideBar = () => {
           <Image src="/logo.svg" alt="software logo" width={100} height={25} />
         )}
         <button
-          className="text-gray-400 hover:text-gray-800"
+          className="text-gray-400 hover:text-gray-800 bg-transparent border-none"
           onClick={() => setToggleSidebar(!toggleSidebar)}
         >
           {toggleSidebar ? (

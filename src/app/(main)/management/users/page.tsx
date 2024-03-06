@@ -36,7 +36,7 @@ const Users = () => {
   }, [sortStatus]);
   return (
     <div className="mt-4 h-full overflow-auto">
-      {/* <DataTable
+      <DataTable
         withTableBorder
         borderRadius="md"
         striped
@@ -88,7 +88,7 @@ const Users = () => {
         onSortStatusChange={setSortStatus}
         selectedRecords={selectedRecords}
         onSelectedRecordsChange={setSelectedRecords}
-      /> */}
+      />
     </div>
   );
 };

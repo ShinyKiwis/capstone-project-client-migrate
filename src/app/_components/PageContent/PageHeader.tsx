@@ -15,7 +15,7 @@ const PageHeader = () => {
         {pageTitle}
       </Text>
       <div className="ms-auto flex gap-4">
-        <button className="w-fit">
+        <button className="w-fit bg-transparent border-none">
           <FaBell size={20} />
         </button>
         <div
