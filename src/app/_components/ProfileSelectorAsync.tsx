@@ -199,7 +199,6 @@ function ProfileSelectorAsync({
         {value.length > 0 &&
           value.map((selectedVal) => {
             let selectedUsr = JSON.parse(selectedVal)
-            console.log(selectedUsr)
             return (
               <ProfileItemsMultiMode
                 name={selectedUsr!.name}

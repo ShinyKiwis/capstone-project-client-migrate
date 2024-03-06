@@ -87,9 +87,19 @@ const EditProject = ({ params }: { params: { id: string } }) => {
     stage: "1",
     programs: ["1", "2"],
     branches: ["2"],
-    instructorsList: ["1234567", "22314567"],
+    instructorsList: [
+      { name: "Van Ba", id: "1234567", email: "testmai1@gmail.com" },
+      {
+        name: "Vo Thi Ngoc Truong Chau",
+        id: "22314567",
+        email: "testmai3@hcmut.edu.vn",
+      },
+    ],
     membersNo: 3,
-    membersList: ["20112337", "1"],
+    membersList: [
+      { name: "Nguyen An", id: "20112337", email: "testmai2@gmail.com" },
+      {name:"seachedUser", id:"1", email:"mail@mail.com"},
+    ],
     description: "<p>Main <strong>desciotuoib</strong></p>",
     tasks:
       '<ul class="list-disc"><li><p>Git gud</p></li><li><p>Git done</p></li></ul>',
@@ -104,9 +114,9 @@ const EditProject = ({ params }: { params: { id: string } }) => {
       stage: retreivedProject.stage,
       programs: retreivedProject.programs,
       branches: retreivedProject.branches,
-      instructorsList: retreivedProject.instructorsList,
+      instructorsList: retreivedProject.instructorsList.map(instructor => instructor.id),
       membersNo: retreivedProject.membersNo,
-      membersList: retreivedProject.membersList,
+      membersList: retreivedProject.membersList.map(member => JSON.stringify(member)),
       description: retreivedProject.description,
       tasks: retreivedProject.tasks,
       references: retreivedProject.references,
@@ -117,6 +127,16 @@ const EditProject = ({ params }: { params: { id: string } }) => {
     //   email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     // },
   });
+
+  function handleFormSubmit(values: any) {
+    // Map selected members as stringyfied object back to ids
+    let newProjectBody = { ...values };
+    let parsedMemberIds: string[] = newProjectBody.membersList.map(
+      (jsonVal: string) => JSON.parse(jsonVal).id,
+    );
+    newProjectBody.membersList = parsedMemberIds;
+    console.log("Submit:", newProjectBody);
+  }
 
   // Display elements
   const InputFieldTitle = ({ title }: { title: string }) => {
@@ -132,7 +152,7 @@ const EditProject = ({ params }: { params: { id: string } }) => {
   // Main return
   return (
     <div className="h-full w-full bg-white">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit((values) => handleFormSubmit(values))}>
         {/* title section */}
         <input
           placeholder="Input project title"
