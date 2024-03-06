@@ -100,6 +100,15 @@ const CreateProject = () => {
     // },
   });
 
+  function handleFormSubmit(values:any){
+    // Map selected members as stringyfied object back to ids
+    let newProjectBody = {...values};
+    let parsedMemberIds: string[] = newProjectBody.membersList.map((jsonVal:string) => JSON.parse(jsonVal).id);
+    newProjectBody.membersList = parsedMemberIds;
+    console.log("Submit:", newProjectBody)
+  }
+
+
   // Display elements
   const InputFieldTitle = ({ title }: { title: string }) => {
     let className = "text-2xl font-bold mb-4";
@@ -114,7 +123,7 @@ const CreateProject = () => {
   // Main return
   return (
     <div className="h-full w-full bg-white">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit((values) => {handleFormSubmit(values)})}>
         {/* title section */}
         <input
           placeholder="Input project title"

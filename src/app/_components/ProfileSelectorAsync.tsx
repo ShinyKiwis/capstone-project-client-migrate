@@ -49,7 +49,6 @@ function ProfileSelectorAsync({
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<UserOptType[]>([]);
   const [currentTimeout, setCurrentTimeout] = useState<NodeJS.Timeout>();
-  const [savedUsers, setsavedUsers] = useState<UserOptType[]>([]);
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -95,8 +94,6 @@ function ProfileSelectorAsync({
   };
 
   const handleValueSelect = (val: string) =>{    
-    let selectedUsr = data.find(usr => usr.id === val)
-    if (selectedUsr && !savedUsers.includes(selectedUsr)) setsavedUsers([...savedUsers, selectedUsr])
     onChange((current) =>
       current.includes(val)
         ? current.filter((v) => v !== val)
@@ -109,9 +106,9 @@ function ProfileSelectorAsync({
   }
 
   const options = data.map((item) => (
-    <Combobox.Option value={item.id} key={item.id}>
+    <Combobox.Option value={JSON.stringify(item)} key={item.id}>
       <Group gap="sm">
-        {value.includes(item.id) ? <CheckIcon size={12} /> : null}
+        {value.includes(JSON.stringify(item)) ? <CheckIcon size={12} /> : null}
         <span>{`${item.id} - ${item.name}`}</span>
       </Group>
     </Combobox.Option>
@@ -145,7 +142,7 @@ function ProfileSelectorAsync({
               let targetIndex = -1;
               if (value.length > 0) {
                 targetIndex = value.findIndex(
-                  (selectedOpt) => selectedOpt === id,
+                  (selectedOpt) => JSON.parse(selectedOpt).id === id,
                 );
               }
               // console.log("Found index:", targetIndex)
@@ -199,11 +196,10 @@ function ProfileSelectorAsync({
       </Combobox>
 
       <div className="flex flex-1 flex-col items-center justify-center px-3">
-        {value.length > 0 && savedUsers.length > 0 &&
-          value.map((selectedId) => {
-            let selectedUsr = savedUsers.find(
-              (opt) => opt.id === selectedId,
-            );
+        {value.length > 0 &&
+          value.map((selectedVal) => {
+            let selectedUsr = JSON.parse(selectedVal)
+            console.log(selectedUsr)
             return (
               <ProfileItemsMultiMode
                 name={selectedUsr!.name}
