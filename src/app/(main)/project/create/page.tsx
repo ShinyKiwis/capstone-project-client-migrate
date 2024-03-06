@@ -15,6 +15,8 @@ import {
 } from "@mantine/core";
 import { formatRevalidate } from "next/dist/server/lib/revalidate";
 import MantineRichText from "@/app/_components/MantineRichText";
+import ProfileSelector from "@/app/_components/ProfileSelector";
+import ProfileSelectorAsync from "@/app/_components/ProfileSelectorAsync";
 
 const stageOptions = [
   {
@@ -24,6 +26,16 @@ const stageOptions = [
   {
     label: "Capstone project",
     value: "2",
+  },
+];
+
+const mockInstructors = [
+  { name: "Van Ba", id: "1234567", email: "testmai1@gmail.com" },
+  { name: "Nguyen An", id: "20112337", email: "testmai2@gmail.com" },
+  {
+    name: "Vo Thi Ngoc Truong Chau",
+    id: "22314567",
+    email: "testmai3@hcmut.edu.vn",
   },
 ];
 
@@ -68,10 +80,6 @@ const CreateProject = () => {
     return mappedBranches;
   }
 
-  const { instructors } = useInstructor();
-  const searchParams = useSearchParams();
-
-  // Input data state hooks
   const form = useForm({
     initialValues: {
       title: "",
@@ -91,42 +99,6 @@ const CreateProject = () => {
     //   email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     // },
   });
-
-  // const [title, setTitle] = useState("");
-  // const [stage, setStage] = useState<string>('-1');
-  // const [instructorList, setInstructorList] = useState<OptionType[]>([]);
-  // const [studentsList, setStudentsList] = useState<OptionType[]>([]);
-  // const [selectedBranches, setSelectedBranches] = useState<OptionType[]>([]);
-  // const [selectedMajors, setSelectedMajors] = useState<OptionType[]>([]);
-  // const [requirements, setRequirements] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [tasks, setTasks] = useState("");
-  // const [refs, setRefs] = useState("");
-  // const [numberOfMembers, setNumberOfMembers] = useState(1);
-
-  // useEffect(() => {
-  //   // Set values based on default options
-  //   if (branches.length > 0 || majors.length > 0) {
-  //     setSelectedBranches([branchOptions[0]]);
-  //     setSelectedMajors([majorOptions[0]]);
-  //   }
-  // }, [branches, majors]);
-
-  // const projectContext = useContext(ProjectContext);
-  // if (!projectContext) return <div>Loading</div>
-  // const { handleCreation } = projectContext;
-  // const stageOptions: OptionType[] = [
-  //   {
-  //     label: "Specialized project",
-  //     value: '1',
-  //     dataObject: {},
-  //   },
-  //   {
-  //     label: "Capstone project",
-  //     value: '2',
-  //     dataObject: {},
-  //   },
-  // ]
 
   // Display elements
   const InputFieldTitle = ({ title }: { title: string }) => {
@@ -254,12 +226,12 @@ const CreateProject = () => {
           <div className="mt-4 flex h-fit gap-4">
             <div className="h-fit min-h-[16rem] w-1/3">
               <InputFieldTitle title="Instructors" />
-              {/* <ProfileSelector
-              type="instructors"
-              onChange={setInstructorList}
-              value={instructorList}
-              isMulti={true}
-            /> */}
+              <ProfileSelector
+                onChange={form.getInputProps("instructorsList").onChange}
+                value={form.getInputProps("instructorsList").value}
+                optionsData={mockInstructors}
+                placeholder="Select instructor(s)"
+              />
             </div>
 
             <div className="w-2/3">
@@ -277,12 +249,7 @@ const CreateProject = () => {
           <div className="mt-4 flex h-fit gap-4">
             <div className="h-fit min-h-[16rem] w-1/3">
               <InputFieldTitle title="Members" />
-              {/* <ProfileSelector
-              type="students"
-              onChange={setStudentsList}
-              value={studentsList}
-              isMulti={true}
-            /> */}
+              <ProfileSelectorAsync onChange={form.getInputProps("membersList").onChange} value={form.getInputProps("membersList").value} placeholder="Select member(s)" searchApi="localhost:3500"/>
             </div>
 
             <div className="w-2/3">
@@ -310,217 +277,12 @@ const CreateProject = () => {
           </div>
         </div>
 
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-end gap-4 pb-4 pt-4">
+          <Button type="submit" color="lime" onClick={() => {console.log("set to submit")}} >Submit for approval</Button>
+          <Button type="submit" onClick={() => {console.log("set to save")}} >Save Changes</Button>
+        </div>
       </form>
     </div>
-
-    // {/* Action buttons: */}
-    // <div className="flex justify-end gap-4 pt-4 pb-4">
-    //   <Button
-    //     isPrimary={true}
-    //     variant="success"
-    //     className="px-4 py-2 text-lg"
-    //     onClick={() => {
-    //       const newProject = {
-    //         name: title,
-    //         stage: parseInt(stage),
-    //         description,
-    //         status: "WAITING_FOR_DEPARTMENT_HEAD",
-    //         owner: {
-    //           id: user.id
-    //         },
-    //         tasks,
-    //         references: refs,
-    //         limit: numberOfMembers,
-    //         semester: {
-    //           year: 2023,
-    //           no: 1,
-    //         },
-    //         supervisors: [
-    //           {
-    //             id: user.id,
-    //           },
-    //           ...instructorList.map((instructor) => {
-    //             return {
-    //               id: +instructor.value,
-    //             };
-    //           }),
-    //         ],
-    //         students: [
-    //           ...studentsList.map((student) => {
-    //             return {
-    //               userId: student.value,
-    //             };
-    //           }),
-    //         ],
-    //         majors: [
-    //           ...selectedMajors.map((major: OptionType) => {
-    //             return {
-    //               id: major.value,
-    //             };
-    //           }),
-    //         ],
-    //         branches: [
-    //           ...selectedBranches.map((branch: OptionType) => {
-    //             return {
-    //               id: branch.value,
-    //             };
-    //           }),
-    //         ]
-    //       };
-    //       axios
-    //         .post("http://localhost:3500/projects", newProject)
-    //         .then((res) => {
-    //           const newSupervisorIds = [
-    //             user.id,
-    //             ...instructorList
-    //               .map((instructor) => {
-    //                 if (+instructor.value != user.id) {
-    //                   return +instructor.value;
-    //                 }
-    //               })
-    //               .filter(
-    //                 (storedInstructor) => storedInstructor !== undefined,
-    //               ),
-    //           ];
-    //           const parsedProject = {
-    //             ...newProject,
-    //             code: res.data.code,
-    //             students: [],
-    //             studentsCount: 0,
-    //             requirements: requirements,
-    //             supervisors: [
-    //               {
-    //                 id: user.id,
-    //                 email: user.email,
-    //                 username: user.username,
-    //                 name: user.name,
-    //               },
-    //               ...instructors.filter((instructor) =>
-    //                 newSupervisorIds.includes(instructor.id),
-    //               ),
-    //             ],
-
-    //             majors: majors.filter(
-    //               (storedMajor: any) => storedMajor.name === selectedMajors,
-    //             ),
-    //             branches: branches.filter(
-    //               (storedBranch: any) => storedBranch.name === selectedBranches,
-    //             ),
-    //           };
-    //           handleCreation(parsedProject);
-    //           navigate(`/project?project=${searchParams.get("project")}`);
-    //         }).catch(err => { console.log(err) });
-    //     }}
-    //   >
-    //     Submit for approval
-    //   </Button>
-
-    //   <Button
-    //     isPrimary={true}
-    //     variant="normal"
-    //     className="px-4 py-2 text-lg"
-    //     onClick={() => {
-    //       // alert(`Instructors:\n${JSON.stringify(instructorList)}\n\nStudents:\n${JSON.stringify(studentsList)}`)
-
-    //       const newProject = {
-    //         name: title,
-    //         stage: parseInt(stage),
-    //         description,
-    //         tasks,
-    //         status: "DRAFT",
-    //         references: refs,
-    //         owner: {
-    //           id: user.id
-    //         },
-    //         limit: numberOfMembers,
-    //         semester: {
-    //           year: 2023,
-    //           no: 1,
-    //         },
-    //         supervisors: [
-    //           {
-    //             id: user.id,
-    //           },
-    //           ...instructorList.map((instructor) => {
-    //             return {
-    //               id: +instructor.value,
-    //             };
-    //           }),
-    //         ],
-    //         students: [
-    //           ...studentsList.map((student) => {
-    //             return {
-    //               userId: student.value,
-    //             };
-    //           }),
-    //         ],
-    //         majors: [
-    //           ...selectedMajors.map((major: OptionType) => {
-    //             return {
-    //               id: major.value,
-    //             };
-    //           }),
-    //         ],
-    //         branches: [
-    //           ...selectedBranches.map((branch: OptionType) => {
-    //             return {
-    //               id: branch.value,
-    //             };
-    //           }),
-    //         ]
-    //       };
-
-    //       axios
-    //         .post("http://localhost:3500/projects", newProject)
-    //         .then((res) => {
-    //           const newSupervisorIds = [
-    //             user.id,
-    //             ...instructorList
-    //               .map((instructor) => {
-    //                 if (+instructor.value != user.id) {
-    //                   return +instructor.value;
-    //                 }
-    //               })
-    //               .filter(
-    //                 (storedInstructor) => storedInstructor !== undefined,
-    //               ),
-    //           ];
-    //           const parsedProject = {
-    //             ...newProject,
-    //             code: res.data.code,
-    //             students: [],
-    //             studentsCount: 0,
-    //             requirements: requirements,
-    //             owner: {
-    //               id: user.id
-    //             },
-    //             supervisors: [
-    //               {
-    //                 id: user.id,
-    //                 email: user.email,
-    //                 username: user.username,
-    //                 name: user.name,
-    //               },
-    //               ...instructors.filter((instructor) =>
-    //                 newSupervisorIds.includes(instructor.id),
-    //               ),
-    //             ],
-    //             majors: majors.filter(
-    //               (storedMajor: any) => storedMajor.name === selectedMajors,
-    //             ),
-    //             branches: branches.filter(
-    //               (storedBranch: any) => storedBranch.name === selectedBranches,
-    //             ),
-    //           };
-    //           handleCreation(parsedProject);
-    //           navigate(`/project?project=${searchParams.get("project")}`);
-    //         });
-    //     }}
-    //   >
-    //     Save Changes
-    //   </Button>
-    // </div>
   );
 };
 

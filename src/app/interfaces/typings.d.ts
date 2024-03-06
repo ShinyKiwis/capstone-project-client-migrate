@@ -24,3 +24,5 @@ type ProgramBranch = {
   name: string,
   branches: Branch[],
 }
+
+type MantineOptType = {value:string, label: string}

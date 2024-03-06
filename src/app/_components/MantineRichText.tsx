@@ -39,7 +39,7 @@ function MantineRichText({content, onChange}:MantineRichTextProps) {
 
   return (
     <RichTextEditor editor={editor} onChange={e => {console.log(e)}}>
-      <RichTextEditor.Toolbar sticky stickyOffset={60}>
+      <RichTextEditor.Toolbar>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
           <RichTextEditor.Italic />

@@ -16,6 +16,13 @@ interface User {
 interface User_ManageTable
   extends Pick<User, "id" | "name" | "email" | "roles"> {}
 
+type UserOptType = {
+  name: string;
+  id: string;
+  email: string;
+  [key: string]: any;
+}
+
 type Instructor = {
   id: number;
   email: string;
