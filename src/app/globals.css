@@ -2,6 +2,10 @@
 @tailwind utilities;
 @layer mantine, mantine-datatable;
 
+@layer tailwind {
+  @tailwind base;
+}
+
 body {
   background-color: white;
 }
