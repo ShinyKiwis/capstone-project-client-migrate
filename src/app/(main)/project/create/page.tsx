@@ -14,6 +14,7 @@ import {
   NumberInput,
 } from "@mantine/core";
 import { formatRevalidate } from "next/dist/server/lib/revalidate";
+import MantineRichText from "@/app/_components/MantineRichText";
 
 const stageOptions = [
   {
@@ -74,7 +75,7 @@ const CreateProject = () => {
   const form = useForm({
     initialValues: {
       title: "",
-      stage: -1,
+      stage: "1",
       programs: [],
       branches: [],
       instructorsList: [],
@@ -145,7 +146,6 @@ const CreateProject = () => {
         {/* title section */}
         <input
           placeholder="Input project title"
-          required
           className="border-gray max-h-[5em] w-full border-b-2 py-2 pb-4 pt-8 text-center text-3xl font-semibold focus:outline-none"
           {...form.getInputProps("title")}
         />
@@ -195,7 +195,7 @@ const CreateProject = () => {
                           {...form.getInputProps("programs")}
                           onChange={(val) => {
                             form.getInputProps("programs").onChange(val);
-                            form.setValues({branches: []})
+                            form.setValues({ branches: [] });
                           }}
                         />
                       </div>
@@ -242,10 +242,10 @@ const CreateProject = () => {
             <div className="w-2/3">
               <div className="flex h-full flex-col">
                 <p className="mb-4 text-2xl font-bold">Requirements</p>
-                {/* <RichTextEditor
-                onChange={setRequirements}
-                initialContent={requirements}
-              /> */}
+                <MantineRichText
+                  content={form.getInputProps("requirements").value}
+                  onChange={form.getInputProps("requirements").onChange}
+                />
               </div>
             </div>
           </div>
@@ -265,10 +265,10 @@ const CreateProject = () => {
             <div className="w-2/3">
               <div className="flex h-full flex-col">
                 <p className="mb-4 text-2xl font-bold">Description</p>
-                {/* <RichTextEditor
-                onChange={setDescription}
-                initialContent={description}
-              /> */}
+                <MantineRichText
+                  content={form.getInputProps("description").value}
+                  onChange={form.getInputProps("description").onChange}
+                />
               </div>
             </div>
           </div>
@@ -288,7 +288,10 @@ const CreateProject = () => {
             <div className="w-2/3">
               <div className="flex h-full flex-col">
                 <p className="mb-4 text-2xl font-bold">Tasks/Missions</p>
-                {/* <RichTextEditor onChange={setTasks} initialContent={tasks} /> */}
+                <MantineRichText
+                  content={form.getInputProps("tasks").value}
+                  onChange={form.getInputProps("tasks").onChange}
+                />
               </div>
             </div>
           </div>
@@ -298,7 +301,10 @@ const CreateProject = () => {
             <div className="w-2/3">
               <div className="flex h-full flex-col">
                 <p className="mb-4 text-2xl font-bold">References</p>
-                {/* <RichTextEditor onChange={setRefs} initialContent={refs} /> */}
+                <MantineRichText
+                  content={form.getInputProps("references").value}
+                  onChange={form.getInputProps("references").onChange}
+                />
               </div>
             </div>
           </div>
