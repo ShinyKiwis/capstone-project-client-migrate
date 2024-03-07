@@ -9,10 +9,6 @@ interface User {
 	username: string;
 	email: string;
 	roles: Role[];
-	credits: number;
-	generation: number;
-	GPA: number;
-	enrolledAt: string;
 	project?: {
 		code: number,
 	}
