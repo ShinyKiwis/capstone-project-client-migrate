@@ -330,6 +330,11 @@
   resolved "https://registry.npmjs.org/@mantine/hooks/-/hooks-7.6.1.tgz"
   integrity sha512-zsOGzFRcQZuER2rzAjfrAqp98W7WCFA43nF1QZUKV7AHTq8q1mtr3DOhFfO3/CA+t1lai68gp1guVcIhP4lrwQ==
 
+"@mantine/modals@^7.6.1":
+  version "7.6.1"
+  resolved "https://registry.yarnpkg.com/@mantine/modals/-/modals-7.6.1.tgz#af5baf47623c18310a85036328b5aa7845278340"
+  integrity sha512-bXCViyQpXEbPGaq/UjCqe/jExku6I6i93okayN54diKZEKbjKAQjQVCowP7axUzMQNhhVRCVtSZPYbkiiEh3Ug==
+
 "@mui/base@5.0.0-beta.38":
   version "5.0.0-beta.38"
   resolved "https://registry.npmjs.org/@mui/base/-/base-5.0.0-beta.38.tgz"

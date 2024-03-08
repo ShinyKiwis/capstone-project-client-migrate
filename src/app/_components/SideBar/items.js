@@ -19,6 +19,10 @@ const sidebarItems = [
         href: "/management/users",
       },
       {
+        title: "Roles Management",
+        href: "/management/roles"
+      },
+      {
         title: "Deadline Management",
         href: "/management/deadline",
       },

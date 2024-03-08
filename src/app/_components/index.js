@@ -6,3 +6,4 @@ export { default as ProjectCardDetail } from "./Project/ProjectCardDetail";
 
 // Modals
 export { default as RemoveModal } from "./Modals/RemoveModal";
+export { default as CreateRoleModal } from "./Modals/CreateRoleModal";

@@ -5,6 +5,8 @@ import "mantine-datatable/styles.css";
 import "./globals.css";
 
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
+
 import PageTitleProvider from "./providers/PageTitleProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,11 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <ColorSchemeScript defaultColorScheme="light"/>
+        <ColorSchemeScript defaultColorScheme="light" />
       </head>
       <body className={inter.className}>
         <MantineProvider defaultColorScheme="light">
-          <PageTitleProvider>{children}</PageTitleProvider>
+          <ModalsProvider>
+            <PageTitleProvider>{children}</PageTitleProvider>
+          </ModalsProvider>
         </MantineProvider>
       </body>
     </html>
