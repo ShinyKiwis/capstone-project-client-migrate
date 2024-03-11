@@ -1,11 +1,14 @@
-import App from "../_components/App"
+import App from "../_components/App";
+import RolesProvider from "../providers/RolesProvider";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <App>{children}</App>
-  )
+    <RolesProvider>
+      <App>{children}</App>
+    </RolesProvider>
+  );
 }

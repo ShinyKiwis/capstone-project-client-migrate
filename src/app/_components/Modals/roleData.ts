@@ -15,3 +15,31 @@ export const managementInitialValues = [
     key: "manage_deadline",
   },
 ];
+
+export const projectInitialValues = [
+  {
+    label: "Create projects",
+    checked: false,
+    key: "create_projects"
+  },
+  {
+    label: "View projects",
+    checked: false,
+    key: "view_projects"
+  },
+  {
+    label: "Modify projects",
+    checked: false,
+    key: "modify_projects"
+  },
+  {
+    label: "Delete/Deactivate projects",
+    checked: false,
+    key: "delete_projects"
+  },
+  {
+    label: "Approve projects",
+    checked: false,
+    key: "approve_projects"
+  }
+]

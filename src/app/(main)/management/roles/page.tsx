@@ -1,17 +1,23 @@
 "use client";
-import { CreateRoleModal, RoleCard } from "@/app/_components";
-import { Grid } from "@mantine/core";
+import { RoleModal, RoleCard } from "@/app/_components";
+import { useRoles } from "@/app/providers/RolesProvider";
+import { Grid, Text } from "@mantine/core";
+import { IoMdAdd } from "react-icons/io";
 
 const Roles = () => {
+  const {roles} = useRoles()
   return (
     <div>
-      <CreateRoleModal />
-      <Grid justify="space-between">
-        <Grid.Col span={4} style={{ minHeight: 200 }}>
-          <RoleCard role="Fuhrer" description="Touch me and you die" />
-        </Grid.Col>
-        <Grid.Col span={4}>2</Grid.Col>
-        <Grid.Col span={4}>3</Grid.Col>
+      <RoleModal Icon={IoMdAdd} action="Create role" />
+      <Text size="lg" fw={600} c="blue" className="mt-4">
+        Roles
+      </Text>
+      <Grid className="mt-2">
+        {roles.map((role) => (
+          <Grid.Col key={role.roleName} span={2}>
+            <RoleCard role={role} />
+          </Grid.Col>
+        ))}
       </Grid>
     </div>
   );
