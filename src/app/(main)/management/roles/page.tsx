@@ -6,8 +6,8 @@ const Roles = () => {
   return (
     <div>
       <CreateRoleModal />
-      <Grid>
-        <Grid.Col span={4}>
+      <Grid justify="space-between">
+        <Grid.Col span={4} style={{ minHeight: 200 }}>
           <RoleCard role="Fuhrer" description="Touch me and you die" />
         </Grid.Col>
         <Grid.Col span={4}>2</Grid.Col>
