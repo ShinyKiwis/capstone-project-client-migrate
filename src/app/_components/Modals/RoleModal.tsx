@@ -104,6 +104,11 @@ const RoleModal = ({ Icon, action, role }: RoleModalProps) => {
         return updateRole;
       }),
     );
+    toggleNotification(
+      `Update role ${roleName} successfully`,
+      `The role ${roleName} is updated.`,
+      "success",
+    );
     close();
   };
 

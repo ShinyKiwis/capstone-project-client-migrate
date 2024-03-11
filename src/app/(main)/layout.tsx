@@ -1,4 +1,5 @@
 import App from "../_components/App";
+import DeadlinesProvider from "../providers/DeadlinesProvider";
 import RolesProvider from "../providers/RolesProvider";
 
 export default function RootLayout({
@@ -7,8 +8,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <RolesProvider>
-      <App>{children}</App>
-    </RolesProvider>
+    <DeadlinesProvider>
+      <RolesProvider>
+        <App>{children}</App>
+      </RolesProvider>
+    </DeadlinesProvider>
   );
 }
