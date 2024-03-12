@@ -45,7 +45,7 @@ const RoleCard: React.FC<RoleCardProps> = ({ role }) => {
 
   return (
     <Card
-      className="flex flex-col items-center"
+      className="flex flex-col items-center shadow transition-all hover:-translate-y-0.5 hover:shadow-lg"
       h="100%"
       shadow="xs"
       padding="md"

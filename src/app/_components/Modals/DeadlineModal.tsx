@@ -21,33 +21,51 @@ const DeadlineModal = ({ Icon, action, deadline }: DeadlineModalProps) => {
     deadline?.startsAt || new Date(),
   );
   const [endsAt, setEndsAt] = useState<Date>(deadline?.endsAt || new Date());
+  const [nameError, setNameError] = useState("");
+  const [semesterError, setSemesterError] = useState("");
 
   const handleCreateDeadline = () => {
-    if (
-      deadlines.some(
-        (deadline) => deadline.name === name && deadline.semester === semester,
-      )
-    ) {
-      toggleNotification(
-        `Deadline ${name} existed in semester ${semester}`,
-        `The role ${name} is existed in semester ${semester}. Please try another.`,
-        "danger",
-      );
-    } else {
-      setDeadlines([
-        ...deadlines,
-        {
-          name,
-          semester,
-          startsAt,
-          endsAt,
-        },
-      ]);
-      toggleNotification(
-        `Create ${name} in semester ${semester} successfully`,
-        `The deadline for event ${name} in semester ${semester} has been created successfully.`,
-        "success",
-      );
+    let hasError = false;
+    if (name.length === 0) {
+      hasError = true;
+      setNameError("Name is required");
+    }
+
+    if (semester.length === 0) {
+      hasError = true;
+      setSemesterError("Semester is required");
+    }
+
+    if (!hasError) {
+      if (
+        deadlines.some(
+          (deadline) =>
+            deadline.name === name && deadline.semester === semester,
+        )
+      ) {
+        toggleNotification(
+          `Deadline ${name} existed in semester ${semester}`,
+          `The deadline ${name} is existed in semester ${semester}. Please try another.`,
+          "danger",
+        );
+      } else {
+        setDeadlines([
+          ...deadlines,
+          {
+            name,
+            semester,
+            startsAt,
+            endsAt,
+          },
+        ]);
+        toggleNotification(
+          `Create ${name} in semester ${semester} successfully`,
+          `The deadline for event ${name} in semester ${semester} has been created successfully.`,
+          "success",
+        );
+      }
+      setNameError("");
+      setSemesterError("");
       setName("");
       setSemester("");
       setStartsAt(new Date());
@@ -57,28 +75,54 @@ const DeadlineModal = ({ Icon, action, deadline }: DeadlineModalProps) => {
   };
 
   const handleUpdateDeadline = () => {
-    setDeadlines(
-      deadlines.map((updateDeadline) => {
-        if (
-          updateDeadline.name == deadline?.name &&
-          updateDeadline.semester == deadline?.semester
-        ) {
-          return {
-            name,
-            semester,
-            startsAt,
-            endsAt,
-          };
-        }
-        return updateDeadline;
-      }),
-    );
-    toggleNotification(
-      `Update ${name} in semester ${semester} successfully`,
-      `The deadline for event ${name} in semester ${semester} has been updated successfully.`,
-      "success",
-    );
-    close();
+    let hasError = false;
+    if (name.length === 0) {
+      hasError = true;
+      setNameError("Name is required");
+    }
+
+    if (semester.length === 0) {
+      hasError = true;
+      setSemesterError("Semester is required");
+    }
+
+    if (!hasError) {
+      if (
+        deadlines.some(
+          (deadline) =>
+            deadline.name === name && deadline.semester === semester,
+        )
+      ) {
+        toggleNotification(
+          `Deadline ${name} existed in semester ${semester}`,
+          `The deadline ${name} is existed in semester ${semester}. Please try another.`,
+          "danger",
+        );
+      } else {
+        setDeadlines(
+          deadlines.map((updateDeadline) => {
+            if (
+              updateDeadline.name == deadline?.name &&
+              updateDeadline.semester == deadline?.semester
+            ) {
+              return {
+                name,
+                semester,
+                startsAt,
+                endsAt,
+              };
+            }
+            return updateDeadline;
+          }),
+        );
+        toggleNotification(
+          `Update ${name} in semester ${semester} successfully`,
+          `The deadline for event ${name} in semester ${semester} has been updated successfully.`,
+          "success",
+        );
+      }
+      close();
+    }
   };
 
   return (
@@ -94,24 +138,36 @@ const DeadlineModal = ({ Icon, action, deadline }: DeadlineModalProps) => {
         centered
       >
         <TextInput
+          required
           value={name}
+          error={nameError}
+          inputWrapperOrder={["label", "error", "input"]}
           onChange={(event) => setName(event.currentTarget.value)}
           label={
-            <Text size="md" c="blue" fw={600} className="mb-2">
+            <Text size="md" fw={600} className="mb-2">
               Name
             </Text>
           }
+          classNames={{
+            label: "flex",
+          }}
           placeholder="E.g. Specialized Project Registration"
           py="xs"
         />
         <TextInput
+          required
           value={semester}
+          error={semesterError}
+          inputWrapperOrder={["label", "error", "input"]}
           onChange={(event) => setSemester(event.currentTarget.value)}
           label={
-            <Text size="md" c="blue" fw={600} className="mb-2">
+            <Text size="md" fw={600} className="mb-2">
               Semester
             </Text>
           }
+          classNames={{
+            label: "flex",
+          }}
           placeholder="E.g. 223"
           py="xs"
         />
@@ -121,7 +177,7 @@ const DeadlineModal = ({ Icon, action, deadline }: DeadlineModalProps) => {
             value ? setStartsAt(value) : setStartsAt(new Date())
           }
           label={
-            <Text size="md" c="blue" fw={600} className="mb-2">
+            <Text size="md" fw={600} className="mb-2">
               Starts at
             </Text>
           }
@@ -134,7 +190,7 @@ const DeadlineModal = ({ Icon, action, deadline }: DeadlineModalProps) => {
             value ? setEndsAt(value) : setEndsAt(new Date())
           }
           label={
-            <Text size="md" c="blue" fw={600} className="mb-2">
+            <Text size="md" fw={600} className="mb-2">
               Ends at
             </Text>
           }

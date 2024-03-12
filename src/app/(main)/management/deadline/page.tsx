@@ -43,7 +43,7 @@ const DeadlineCard = ({ deadline }: { deadline: Deadline }) => {
       },
     });
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="sm" padding="lg" radius="md" withBorder className="mt-4 shadow transition-all hover:-translate-y-0.5 hover:shadow-lg">
       <Badge variant="light" color="blue">
         Semester {deadline.semester}
       </Badge>

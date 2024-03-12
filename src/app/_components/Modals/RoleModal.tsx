@@ -60,6 +60,7 @@ const RoleModal = ({ Icon, action, role }: RoleModalProps) => {
   const handleCreateRole = () => {
     if (roleName.length === 0) {
       setError("Role name is required");
+      return;
     } else if (roles.some((role) => role.roleName == roleName)) {
       toggleNotification(
         `Role ${roleName} existed`,
@@ -84,6 +85,7 @@ const RoleModal = ({ Icon, action, role }: RoleModalProps) => {
         "success",
       );
     }
+    setError("");
     setManagementValues.setState(managementInitialValues);
     setProjectValues.setState(projectInitialValues);
     setRoleName("");
@@ -91,24 +93,35 @@ const RoleModal = ({ Icon, action, role }: RoleModalProps) => {
   };
 
   const handleUpdateRole = () => {
-    setRoles(
-      roles.map((updateRole) => {
-        if (updateRole.roleName == role?.roleName) {
-          return {
-            roleName: roleName,
-            resources: [managementValues, projectValues].flatMap((array) =>
-              array.map((item) => item.key),
-            ),
-          };
-        }
-        return updateRole;
-      }),
-    );
-    toggleNotification(
-      `Update role ${roleName} successfully`,
-      `The role ${roleName} is updated.`,
-      "success",
-    );
+    if (roleName.length === 0) {
+      setError("Role name is required");
+      return;
+    } else if (roles.some((role) => role.roleName == roleName)) {
+      toggleNotification(
+        `Role ${roleName} existed`,
+        `The role ${roleName} is existed. Please try another.`,
+        "danger",
+      );
+    } else {
+      setRoles(
+        roles.map((updateRole) => {
+          if (updateRole.roleName == role?.roleName) {
+            return {
+              roleName: roleName,
+              resources: [managementValues, projectValues].flatMap((array) =>
+                array.map((item) => item.key),
+              ),
+            };
+          }
+          return updateRole;
+        }),
+      );
+      toggleNotification(
+        `Update role ${roleName} successfully`,
+        `The role ${roleName} is updated.`,
+        "success",
+      );
+    }
     close();
   };
 
@@ -126,20 +139,26 @@ const RoleModal = ({ Icon, action, role }: RoleModalProps) => {
         }
       >
         <>
-          <Text size="md" c="blue" fw={600} className="mb-2">
-            Role name
-          </Text>
           <TextInput
+            required
             data-autofocus
             placeholder="E.g Admin..."
             className="mb-4 mt-2"
+            label={
+              <Text size="md" fw={600} className="mb-2">
+                Role name
+              </Text>
+            }
+            classNames={{
+              label: "flex",
+            }}
             value={roleName}
             inputWrapperOrder={["label", "error", "input"]}
             error={error}
             onChange={(e) => setRoleName(e.currentTarget.value)}
           />
 
-          <Text size="md" c="blue" fw={600} className="mb-2">
+          <Text size="md" fw={600} className="mb-2">
             Resources
           </Text>
           <Grid gutter="xl">
