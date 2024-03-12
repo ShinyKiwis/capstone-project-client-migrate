@@ -3,30 +3,38 @@ import {
   Group,
   Button,
   rem,
-  useMantineTheme,
   Modal,
   Container,
-  List,
-  ThemeIcon,
-  ListItem,
-  Pill,
+  Badge,
+  CloseButton,
+  ScrollArea,
 } from "@mantine/core";
-import {
-  Dropzone,
-  DropzoneProps,
-  FileWithPath,
-  IMAGE_MIME_TYPE,
-} from "@mantine/dropzone";
+import { Dropzone, FileWithPath, MIME_TYPES } from "@mantine/dropzone";
 import { useDisclosure } from "@mantine/hooks";
 import { MdUploadFile } from "react-icons/md";
 import { FiUpload } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import { FiFileText } from "react-icons/fi";
 import { useState } from "react";
+import { FaFileWord, FaFilePdf } from "react-icons/fa";
+
+const getFileIcon = (fileType: string) => {
+  console.log(fileType);
+  if (fileType.includes("word")) {
+    return <FaFileWord size={20} />;
+  } else if (fileType.includes("pdf")) {
+    return <FaFilePdf size={20} />;
+  }
+  return <FiFileText size={20} />;
+};
 
 const UploadFileModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [files, setFiles] = useState<FileWithPath[]>([]);
+
+  const handleDeleteFile = (filename: string) => {
+    setFiles(files.filter((file) => file.name != filename));
+  };
   return (
     <>
       <Modal
@@ -40,15 +48,13 @@ const UploadFileModal = () => {
         }
       >
         <Dropzone
-          // loading
-          // onDrop={(files) => console.log("accepted files", files)}
           onReject={(files) => console.log("rejected files", files)}
           maxSize={5 * 1024 ** 2}
-          accept={IMAGE_MIME_TYPE}
+          accept={[MIME_TYPES.pdf, MIME_TYPES.doc, MIME_TYPES.docx]}
           onDrop={(newFiles) => {
             setFiles((currentFiles) => [...currentFiles, ...newFiles]);
           }}
-          className="data-reject:bg-red-500 data-[]:"
+          className="border-2"
         >
           <Group
             justify="center"
@@ -86,7 +92,7 @@ const UploadFileModal = () => {
 
             <div>
               <Text size="xl" inline>
-                Drag images here or click to select files
+                Drag files here or click to select files
               </Text>
               <Text size="sm" c="dimmed" inline mt={7}>
                 Attach as many files as you like, each file should not exceed
@@ -95,40 +101,53 @@ const UploadFileModal = () => {
             </div>
           </Group>
         </Dropzone>
-        <Container>
-          {/* <List
-            spacing="xs"
-            size="sm"
-            center
-            icon={
-              <ThemeIcon color="teal" size={24} radius="xl">
-                <FiFileText style={{ width: rem(16), height: rem(16) }} />
-              </ThemeIcon>
-            }
-          >
+        <Container px={0} className="my-4">
+          <ScrollArea.Autosize mah={250}>
             {files.map((file) => (
-              <ListItem key={file.name}>{file.name}</ListItem>
-            ))}
-          </List> */}
-
-          <Pill.Group size="md">
-            {files.map((file, index) => (
-              <Pill
-                key={index}
-                onRemove={() => {
-                  setFiles((currentFiles) =>
-                    currentFiles.filter((_, i) => i != index),
-                  );
-                }}
-                withRemoveButton
+              <Badge
+                className="flex justify-between normal-case"
+                fullWidth
+                variant="light"
+                rightSection={
+                  <CloseButton
+                    size={20}
+                    onClick={() => handleDeleteFile(file.name)}
+                  />
+                }
+                radius="sm"
+                size="lg"
+                py={18}
+                my={8}
               >
-                {file.name}
-              </Pill>
+                <span className="flex items-center gap-2">
+                  {getFileIcon(file.type)}
+                  {file.name}
+                </span>
+              </Badge>
             ))}
-          </Pill.Group>
+          </ScrollArea.Autosize>
         </Container>
+        <Group justify="flex-end" gap="xs">
+          <Button onClick={close} variant="outline">
+            Cancel
+          </Button>
+          <Button
+            variant="filled"
+            onClick={() => {
+              console.log(files);
+              close();
+            }}
+          >
+            Upload
+          </Button>
+        </Group>
       </Modal>
-      <Button variant="filled" leftSection={<MdUploadFile />} onClick={open}>
+      <Button
+        variant="filled"
+        leftSection={<MdUploadFile />}
+        onClick={open}
+        ms="md"
+      >
         Upload File
       </Button>
     </>
