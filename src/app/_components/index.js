@@ -9,3 +9,4 @@ export { default as RoleCard } from "./RoleCard";
 export { default as RemoveModal } from "./Modals/RemoveModal";
 export { default as RoleModal } from "./Modals/RoleModal";
 export { default as UploadFileModal } from "./Modals/UploadFileModal";
+export { default as FilterModal } from "./Modals/FilterModal";

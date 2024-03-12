@@ -8,6 +8,7 @@ import {
   ProjectCard,
   ProjectCardDetail,
   UploadFileModal,
+  FilterModal
 } from "@/app/_components";
 import { projectData } from "./projectData";
 
@@ -17,13 +18,7 @@ const Project = () => {
       <div className="w-2/5">
         <div className="flex w-full gap-4">
           <TextInput placeholder="Search projects..." className="flex-1" />
-          <Button
-            leftSection={<PiSliders size={20} />}
-            variant="outline"
-            className="ms-auto"
-          >
-            Filter
-          </Button>
+          <FilterModal />
         </div>
         <div className="mt-4">
           <Button variant="filled" leftSection={<IoCreate size={20} />}>

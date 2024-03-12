@@ -34,8 +34,8 @@ const ProjectCardStudentList = ({
       </div>
       <Tooltip.Group openDelay={300} closeDelay={100}>
         <Avatar.Group spacing="sm">
-          {students.map((student) => (
-            <Tooltip label={student.user.name} withArrow>
+          {students.map((student, index) => (
+            <Tooltip key={index} label={student.user.name} withArrow>
               <Avatar
                 src="https://bizweb.dktcdn.net/100/438/408/files/gigachad-meme-yodyvn.jpg"
                 radius="xl"
