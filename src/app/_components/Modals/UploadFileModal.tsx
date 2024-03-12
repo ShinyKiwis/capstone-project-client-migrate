@@ -112,6 +112,7 @@ const UploadFileModal = () => {
                   <CloseButton
                     size={20}
                     onClick={() => handleDeleteFile(file.name)}
+                    c="blue"
                   />
                 }
                 radius="sm"
