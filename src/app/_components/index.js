@@ -8,3 +8,4 @@ export { default as RoleCard } from "./RoleCard";
 // Modals
 export { default as RemoveModal } from "./Modals/RemoveModal";
 export { default as RoleModal } from "./Modals/RoleModal";
+export { default as UploadFileModal } from "./Modals/UploadFileModal";
