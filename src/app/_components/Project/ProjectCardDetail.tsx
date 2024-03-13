@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import React from "react";
 import { BsFillPeopleFill } from "react-icons/bs";
+import { ApproveModal, DeactivateModal, DenyModal, EnrollModal, UnenrollModal } from "..";
 
 const ProjectCardDetail = () => {
   return (
@@ -108,7 +109,11 @@ const ProjectCardDetail = () => {
       </ScrollArea>
       <Card.Section inheritPadding py="xs">
         <Group justify="flex-end">
-          <Button>Haha</Button>
+          <ApproveModal />
+          <EnrollModal />
+          <UnenrollModal />
+          <DenyModal />
+          <DeactivateModal />
         </Group>
       </Card.Section>
     </Card>

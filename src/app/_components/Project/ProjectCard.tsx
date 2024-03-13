@@ -10,6 +10,7 @@ import {
   Button,
 } from "@mantine/core";
 import React from "react";
+import { ApproveModal, DeactivateModal, DenyModal, EnrollModal, UnenrollModal } from "..";
 
 interface ProjectCardProps {
   projectObject: ProjectProps;
@@ -129,7 +130,11 @@ const ProjectCard = ({ projectObject }: ProjectCardProps) => {
       </Card.Section>
       <Card.Section inheritPadding py="xs">
         <Group justify="flex-end">
-          <Button variant="filled">Enroll</Button>
+          <ApproveModal />
+          <EnrollModal />
+          <UnenrollModal />
+          <DenyModal />
+          <DeactivateModal />
         </Group>
       </Card.Section>
     </Card>
