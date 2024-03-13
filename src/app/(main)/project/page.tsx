@@ -8,7 +8,8 @@ import {
   ProjectCard,
   ProjectCardDetail,
   UploadFileModal,
-  FilterModal
+  FilterModal,
+  ApproveAllModal,
 } from "@/app/_components";
 import { projectData } from "./projectData";
 
@@ -32,6 +33,7 @@ const Project = () => {
             Upload project
           </Button> */}
           <UploadFileModal />
+          <ApproveAllModal />
         </div>
       </div>
       <div className="mt-4 flex w-full overflow-auto">
