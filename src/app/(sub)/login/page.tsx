@@ -1,16 +1,33 @@
 "use client";
 import Image from "next/image";
 import { useForm } from "@mantine/form";
-import { Button, PasswordInput, TextInput } from "@mantine/core";
+import { Button, PasswordInput, Text, TextInput } from "@mantine/core";
 import Link from "next/link";
+import { useAuth } from "@/app/providers/AuthProvider";
+import { useEffect } from "react";
+import useNavigate from "@/app/hooks/useNavigate";
 
 const Login = () => {
+  const {error, login, user} = useAuth()
+  const navigate = useNavigate()
   const form = useForm({
     initialValues: {
       username: "",
       password: "",
     },
   });
+
+  useEffect(()=>{
+    if(user) {
+      navigate("/project?project=specialized")
+    }
+  }, [])
+
+  const handleLogin = (values: {username: string, password: string}) => {
+    const {username, password} = values
+    login(username, password)
+  }
+
 
   return (
     <div className="mx-auto h-screen w-8/12 py-16">
@@ -34,8 +51,9 @@ const Login = () => {
               className="mb-12"
             />
           </div>
+          <Text c="red" fw={600}>{error}</Text>
           <form
-            onSubmit={form.onSubmit((values) => console.log(values))}
+            onSubmit={form.onSubmit((values) => handleLogin(values))}
             className="flex w-full flex-col gap-2"
           >
             <span className="text-lg font-medium">Username</span>

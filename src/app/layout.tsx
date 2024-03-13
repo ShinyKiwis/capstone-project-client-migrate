@@ -12,6 +12,7 @@ import { ModalsProvider } from "@mantine/modals";
 
 import PageTitleProvider from "./providers/PageTitleProvider";
 import { Notifications } from "@mantine/notifications";
+import AuthProvider from "./providers/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,10 +33,12 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <MantineProvider defaultColorScheme="light">
-          <ModalsProvider>
-            <Notifications />
-            <PageTitleProvider>{children}</PageTitleProvider>
-          </ModalsProvider>
+          <AuthProvider>
+            <ModalsProvider>
+              <Notifications />
+              <PageTitleProvider>{children}</PageTitleProvider>
+            </ModalsProvider>
+          </AuthProvider>
         </MantineProvider>
       </body>
     </html>

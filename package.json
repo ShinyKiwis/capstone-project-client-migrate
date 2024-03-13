@@ -21,6 +21,7 @@
     "@mui/material": "^5.15.12",
     "@mui/x-data-grid": "^6.19.6",
     "@tabler/icons-react": "^2.47.0",
+    "axios": "^1.6.7",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
     "lodash": "^4.17.21",
